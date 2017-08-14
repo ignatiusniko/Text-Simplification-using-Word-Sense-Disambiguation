@@ -1,0 +1,99 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+    <title>Reusable Form Demo</title>
+    <link rel="stylesheet" media="screen" href="static/bootstrap.min.css">
+    <link rel="stylesheet" href="static/bootstrap-theme.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+</head>
+<body>
+
+
+<div class="container">
+    <div class="row">
+        <h1 class="text-center">Text Simplification</h1>
+        <br>
+        <form action="" method="post" role="form">
+            {{ form.csrf }}
+            <div class="form-group col-sm-4">
+                <h2 class="text-center" style="border-bottom:3px solid #000">Input</h2>
+                <br>
+                <label for="text">Input Sentence:</label>
+                <textarea type="text" class="form-control" id="text" name="text" placeholder="Text" style="width:100%"></textarea>
+                <br>
+                <label for="text">Word:</label>
+                <input type="text" class="form-control" id="word" name="word" placeholder="Text">
+            </div>
+            <div class="form-group col-sm-3">
+                <h2 class="text-center" style="border-bottom:3px solid #000">Setting</h2>
+                <br>
+                <h4 class="text-center" style="border-bottom:1px solid #000">Complex Word Identification</h4>
+                <div class="radio">
+                    <label><input type="radio" id="model_CWI" name="model_CWI" value="Model_Normal(LOG).txt" checked>Model Wikipedia</label>
+                </div>
+                <div class="radio">
+                    <label><input type="radio" id="model_CWI" name="model_CWI" value="Model_Simple(LOG).txt">Model Simple Wikipedia</label>
+                </div>
+                <br>
+                <input type="text" class="form-control" id="treshold" name="treshold" placeholder="Treshold Value">
+                <br>
+                <h4 class="text-center" style="border-bottom:1px solid #000">Subtitution Generation and Subtitution Selection</h4>
+                <div class="radio">
+                    <label><input type="radio" id="CWI_NER" name="CWI_NER"  value=True checked>With NER Preprocessing</label>
+                </div>
+                <div class="radio">
+                    <label><input type="radio" id="CWI_NER" name="CWI_NER"  value=False>Without NER Preprocessing</label>
+                </div>
+                <br>
+                <select class="form-control" id="metode" name="metode">
+                    <option value="noWSD">No WSD</option>
+                    <option value="original_lesk">Original Lesk</option>
+                    <option value="simple_lesk">Simple Lesk</option>
+                    <option value="adapted_lesk">Adapted Lesk</option>
+                </select>
+                <br>
+                <h4 class="text-center" style="border-bottom:1px solid #000">Subtitution Ranking</h4>
+                <div class="radio">
+                    <label><input type="radio" id="model_SR" name="model_SR" value="Model_Normal(LOG).txt" checked>Wikipedia</label>
+                </div>
+                <div class="radio">
+                    <label><input type="radio" id="model_SR" name="model_SR" value="Model_Simple(LOG).txt">Simple
+                        Wikipedia</label>
+                </div>
+                <br>
+                <button type="submit" class="btn btn-primary btn-block">Submit</button>
+            </div>
+
+
+            <div class="form-group col-sm-5">
+                <h2 class="text-center" style="border-bottom:3px solid #000">Output</h2>
+                <br>
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                {% for message in messages %}
+                {% if "Error" not in message[1]: %}
+                <textarea type="text" class="form-control" style="width:100%; height:100%;">{{ message[1] }}</textarea>
+                <br>
+                {% endif %}
+
+                {% if "Error" in message[1]: %}
+                <div class="alert alert-danger">
+                    {{ message[1] }}
+                </div>
+                {% endif %}
+                {% endfor %}
+                {% endif %}
+                {% endwith %}
+            </div>
+
+        </form>
+
+
+    </div>
+    <br>
+</div>
+</div>
+</div>
+</body>
+</html>
